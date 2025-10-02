@@ -9,6 +9,9 @@ import { vapi } from "@/lib/vapi.sdk";
 import { interviewer } from "@/constants";
 import { createFeedback } from "@/lib/actions/general.action";
 
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../firebase/admin"; // your firebase config
+
 enum CallStatus {
   INACTIVE = "INACTIVE",
   CONNECTING = "CONNECTING",
@@ -145,6 +148,21 @@ const Agent = ({
     vapi.stop();
   };
 
+// const default = function UserProfile() {
+//     const [photoURL, setPhotoURL] = useState<string | null>(null);
+  
+//     useEffect(() => {
+//       const unsubscribe = onAuthStateChanged(auth, (user) => {
+//         if (user) {
+//           setPhotoURL(user.photoURL); // photo from Google / Facebook / custom
+//         } else {
+//           setPhotoURL(null);
+//         }
+//       });
+  
+//       return () => unsubscribe();
+//     }, []);
+
   return (
     <>
       <div className="call-view">
@@ -167,7 +185,7 @@ const Agent = ({
         <div className="card-border">
           <div className="card-content">
             <Image
-              src="/user-avatar.png"
+              src={photoURL}
               alt="profile-image"
               width={539}
               height={539}
